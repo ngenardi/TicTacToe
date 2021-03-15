@@ -1,4 +1,4 @@
-//test
+
 public class WinDetection {
 	
 	public boolean DetectWin(int[] array) {
