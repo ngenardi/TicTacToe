@@ -1,0 +1,103 @@
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
+
+public class TicTacToe extends JPanel implements ActionListener {
+	JButton buttons[] = new JButton[9];
+	int alt = 0;
+
+	public TicTacToe() {
+		setLayout(new GridLayout(3, 3));
+		initializebuttons();
+	}
+
+	public void initializebuttons() {
+		for (int i = 0; i <= 8; i++) {
+			buttons[i] = new JButton();
+			buttons[i].setText("");
+			buttons[i].addActionListener(this);
+			add(buttons[i]);
+
+		}
+	}
+
+	public void buttonsReset() {
+		for (int i = 0; i <= 8; i++) {
+			buttons[i].setText("");
+		}
+	}
+
+	public boolean detectWin(int[] array) {
+
+		boolean winStatus = false;
+		boolean positionInScenario = false;
+		int[][] winScenarios = { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 }, { 0, 3, 6 }, { 1, 4, 7 }, { 2, 5, 8 },
+				{ 0, 4, 8 }, { 2, 4, 6 } };
+
+		for (int[] scenerio : winScenarios) {
+			for (int position : scenerio) {
+				positionInScenario = false;
+
+				for (int playerPosition : array) {
+					if (position == playerPosition) {
+						positionInScenario = true;
+						break;
+					}
+				}
+
+				if (positionInScenario == false) {
+					continue;
+				}
+			}
+
+			if (positionInScenario == true) {
+				winStatus = true;
+				break;
+			}
+		}
+
+		if (winStatus) {
+			return true;
+		}
+
+		else {
+			return false;
+		}
+	}
+
+	public boolean detectTie(int[] array) {
+		if (array.length == 0) {
+			return true;
+		}
+
+		else {
+			return false;
+		}
+	}
+
+	public void actionPerformed(ActionEvent e) {
+
+		JButton buttonClicked = (JButton) e.getSource();
+
+		if (alt % 2 == 0) {
+			buttonClicked.setText("X");
+		} else {
+			buttonClicked.setText("O");
+		}
+
+		alt++;
+
+		if (detectWin(new int[9]) == true) {
+			JOptionPane.showConfirmDialog(null, "Game Over. \n Goodbye!");
+			buttonsReset();
+
+		}
+		if (detectTie(new int[9]) == true) {
+			JOptionPane.showConfirmDialog(null, "Tie. \n Goodbye!");
+			buttonsReset();
+		}
+
+	}
+
+}
