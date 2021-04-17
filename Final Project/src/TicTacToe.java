@@ -5,7 +5,7 @@ import javax.swing.*;
 
 public class TicTacToe extends JPanel implements ActionListener
 {
-	static JButton[] buttons = new JButton[9];
+	JButton[] buttons = new JButton[9];
 	int alt = 0;
 
 	public TicTacToe()
@@ -37,7 +37,7 @@ public class TicTacToe extends JPanel implements ActionListener
 	}
 
 	
-	public boolean detectWin(int[] array)
+	public boolean detectWin2(int[] array)
 	{
 
 		boolean winStatus = false;
@@ -113,7 +113,7 @@ public class TicTacToe extends JPanel implements ActionListener
 	    {
 	    	if (openPositions[i] == position)
 	    	{
-	    		oPositions[playerTurn - 1] = position;
+	    		oPositions[playerTurn] = position;
 	            openPositions[i] = 9;
 	            return true;
 	        }
@@ -129,14 +129,54 @@ public class TicTacToe extends JPanel implements ActionListener
 		{
 			if (openPositions[i] == position)
 			{
-				xPositions[playerTurn - 1] = position;
+				xPositions[playerTurn] = position;
 	            openPositions[i] = 9;
 	            return true;
 	        }
 	    }
 		return false;
 	}
-
+	
+	public boolean checkSide(int x, int y)
+    {
+        if (buttons[x].getText().equals(buttons[y].getText()) && !buttons[x].getText().equals(""))
+        {
+        	return true;
+        }
+        else
+        {
+        	return false;
+        }
+    }
+	
+	public boolean detectWin()
+    {
+        
+        if( checkSide(0,1) && checkSide(1,2)) 
+            return true;
+        else if( checkSide(3,4) && checkSide(4,5) )
+            return true;
+        else if ( checkSide(6,7) && checkSide(7,8))
+            return true;
+        
+        //vertical win check
+        else if ( checkSide(0,3) && checkSide(3,6))
+            return true;  
+        else if ( checkSide(1,4) && checkSide(4,7))
+            return true;
+        else if ( checkSide(2,5) && checkSide(5,8))
+            return true;
+        
+        //diagonal win check
+        else if ( checkSide(0,4) && checkSide(4,8))
+            return true;  
+        else if ( checkSide(2,4) && checkSide(4,6))
+            return true;
+        else 
+            return false;
+        
+        
+    }
 	
 	public void actionPerformed(ActionEvent e)
 	{
@@ -152,18 +192,15 @@ public class TicTacToe extends JPanel implements ActionListener
 			buttonClicked.setText("O");
 		}
 
-		if (detectWin(xPositions) || detectWin(oPositions))
+		if (detectWin())
 		{
 			JOptionPane.showConfirmDialog(null, "Game Over. \n Goodbye!");
 			buttonsReset();
-
 		}
-		if (detectTie(oPositions) && detectTie(xPositions))
+		else
 		{
 			JOptionPane.showConfirmDialog(null, "Tie. \n Goodbye!");
-			buttonsReset();
 		}
-		
 		alt++;
 		
 		oMove(playero++, alt);
