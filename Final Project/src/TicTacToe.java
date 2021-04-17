@@ -137,7 +137,7 @@ public class TicTacToe extends JPanel implements ActionListener
 		return false;
 	}
 	
-	public boolean checkSide(int x, int y)
+	public boolean checkSide(int x, int y) //JOHN MADE THIS...
     {
         if (buttons[x].getText().equals(buttons[y].getText()) && !buttons[x].getText().equals(""))
         {
@@ -149,7 +149,7 @@ public class TicTacToe extends JPanel implements ActionListener
         }
     }
 	
-	public boolean detectWin()
+	public boolean detectWin()//JOHN MADE THIS...
     {
         
         if( checkSide(0,1) && checkSide(1,2)) 
