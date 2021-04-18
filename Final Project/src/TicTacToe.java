@@ -1,9 +1,11 @@
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.*;
 import javax.swing.*;
 
 public class TicTacToe extends JPanel implements ActionListener {
 
+	Color purple = new Color(80, 37, 134);
 	JButton[] buttons = new JButton[9];
 	int turnNum = 0;
 	static int[] openPositions = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
@@ -25,8 +27,11 @@ public class TicTacToe extends JPanel implements ActionListener {
 			buttons[i] = new JButton();
 			buttons[i].setText("");
 			buttons[i].setName(String.valueOf(i));
+			buttons[i].setBackground(purple);
+			buttons[i].setOpaque(true);
 			buttons[i].addActionListener(this);
 			add(buttons[i]);
+			
 		}
 	}
 
